@@ -1,25 +1,33 @@
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.UIElements;
+using UnityEngine;
 
-public class AsteroidControl : MonoBehaviour
+public class ChasePlayer : MonoBehaviour
 {
     [Header("Config")]
     [SerializeField] private float range;
     [SerializeField] private float speed;
     [SerializeField] private LayerMask LayerMask;
+    [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] private string tagName;
+    [SerializeField] private int value;
+    private CoinManager coinManager;
+
     private Transform playerTransform;
     private bool isFollowing;
 
     private void Start()
     {
         isFollowing = false;
+        coinManager = CoinManager.instance;
     }
 
 
     // Update is called once per frame
     void Update()
     {
-         if (!isFollowing && Detect())
+        if (!isFollowing && Detect())
         {
             StartCoroutine(FollowPlayerForDuration(3f)); // Đuổi theo player trong 3 giây
         }
@@ -59,9 +67,22 @@ public class AsteroidControl : MonoBehaviour
         isFollowing = false;
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag(tagName))
+        {
+            coinManager.ChangeCoins(value);
+            GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(explosion, 2f);
+            Destroy(collision.gameObject);
+            Destroy(gameObject);
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, range);
     }
+
 }

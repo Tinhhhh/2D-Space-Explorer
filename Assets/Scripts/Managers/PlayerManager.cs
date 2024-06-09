@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class PlayerManager1 : MonoBehaviour
+public class PlayerManager : MonoBehaviour
 {
-    public static PlayerManager1 instance;
+    public static PlayerManager instance;
     [SerializeField] private TMP_Text extralifeDisplay;
-    public int extralife = 3;
+    public int extralife = 1;
     void Awake()
     {
         if (!instance)

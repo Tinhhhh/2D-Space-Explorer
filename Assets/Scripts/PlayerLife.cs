@@ -5,34 +5,45 @@ using UnityEngine;
 public class PlayerLife : MonoBehaviour
 {
     // Start is called before the first frame update
-    private PlayerManager1 playerManager;
+    [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] private int value;
+    private PlayerManager playerManager;
+    private CoinManager coinManager;
+    private Player player;
+
+
 
     private void Start()
     {
-        playerManager = PlayerManager1.instance;
+        //Lay gia tri hien tai 
+        coinManager = CoinManager.instance;
+        playerManager = PlayerManager.instance;
+        player = Player.instance;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Asteroid" || collision.gameObject.tag == "Enemy")
         {
-
+            GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(explosion, 2f);
             Destroy(collision.gameObject);
-            gameObject.GetComponent<PlayerAnimations>()
-                          .ShowDeadAnimation();
+            coinManager.ChangeCoins(value);
+            gameObject.GetComponent<PlayerAnimations>().ShowDeadAnimation();
+            // gameObject.SetActive(false);
             playerManager.MinusExtraLife(1);
             if (playerManager.extralife <= 0)
             {
-                StartCoroutine(DelayedPlayerDead(0.18f, gameObject));
+                Destroy(gameObject);
             }
+            // else
+            // {
+            //     Player.instance.EnablePlayerAfterDelay(gameObject, 2f);
+            // }
         }
     }
 
-    private IEnumerator DelayedPlayerDead(float delay, GameObject gameObject)
-    {
-        yield return new WaitForSeconds(delay);
-        Destroy(gameObject);
-    }
+
 }
 
 

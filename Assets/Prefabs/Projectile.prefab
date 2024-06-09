@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6163256197875700478}
   - component: {fileID: 7566219787343997386}
   - component: {fileID: 8569030507958291223}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff5c8184e4202a446afb1090b2b15250, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 20
+  moveSpeed: 40
   bulletExist: 5
   explosionPrefab: {fileID: 3675091237904934080, guid: a67011f926b70484393b47727951141b, type: 3}
+  value: 1000

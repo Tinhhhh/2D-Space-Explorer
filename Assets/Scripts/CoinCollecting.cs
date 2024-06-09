@@ -6,12 +6,12 @@ public class CoinCollecting : MonoBehaviour
 {
     [SerializeField] private int value;
     private bool hasTriggered;
-    private CoinManager1 coinManager;
+    private CoinManager coinManager;
 
     private void Start()
     {
         //Lay gia tri hien tai 
-        coinManager = CoinManager1.instance;
+        coinManager = CoinManager.instance;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

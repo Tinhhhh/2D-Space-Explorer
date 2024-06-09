@@ -21,7 +21,6 @@ public class ProjectileShooter : MonoBehaviour
         {
             Instantiate(projectilePrefab, transform.position, Quaternion.identity);
             lastShootTime = Time.time;
-
         }
 
     }
