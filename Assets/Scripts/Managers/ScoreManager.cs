@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class CoinManager : MonoBehaviour
+public class ScoreManager : MonoBehaviour
 {
-    public static CoinManager instance;
-    [SerializeField] private TMP_Text coinsDisplay;
+    public static ScoreManager instance;
+    [SerializeField] private TMP_Text scoreDisplay;
+    private PlayerManager playerManager;
 
-    private int coins;
+    private int score;
     private void Awake()
     {
         if (!instance)
@@ -21,24 +22,30 @@ public class CoinManager : MonoBehaviour
     {
         // Bắt đầu Coroutine để tăng điểm mỗi 2 giây
         StartCoroutine(IncreaseCoinsOverTime());
+        playerManager = PlayerManager.instance;
     }
     private void OnGUI()
     {
-        coinsDisplay.text = coins.ToString();
+        scoreDisplay.text = score.ToString();
     }
 
     public void ChangeCoins(int amount)
     {
-        coins += amount;
-        if (coins <= 0)
+        score += amount;
+        if (score <= 0)
         {
-            coins = 0;
+            score = 0;
         }
+    }
+
+    public int GetScore()
+    {
+        return score;
     }
 
     private IEnumerator IncreaseCoinsOverTime()
     {
-        while (true)
+        while (true && playerManager.extralife <=0)
         {
             yield return new WaitForSeconds(2f); // Chờ 2 giây
             ChangeCoins(50); // Tăng 50 điểm

@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinCollecting : MonoBehaviour
+public class ScoreCollecting : MonoBehaviour
 {
     [SerializeField] private int value;
     private bool hasTriggered;
-    private CoinManager coinManager;
+    private ScoreManager scoreManager;
 
     private void Start()
     {
         //Lay gia tri hien tai 
-        coinManager = CoinManager.instance;
+        scoreManager = ScoreManager.instance;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -19,7 +19,7 @@ public class CoinCollecting : MonoBehaviour
         if (collision.CompareTag("Player") && !hasTriggered)
         {
             hasTriggered = true;
-            coinManager.ChangeCoins(value);
+            scoreManager.ChangeCoins(value);
             Destroy(gameObject);
         }
     }

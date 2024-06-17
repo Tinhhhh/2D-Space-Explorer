@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.UIElements;
 using UnityEngine;
 
-public class ChasePlayer : MonoBehaviour
+public class UFOChase : MonoBehaviour
 {
     [Header("Config")]
     [SerializeField] private float range;
@@ -12,37 +11,38 @@ public class ChasePlayer : MonoBehaviour
     [SerializeField] private GameObject explosionPrefab;
     [SerializeField] private string tagName;
     [SerializeField] private int value;
-    private CoinManager coinManager;
+    private ScoreManager scoreManager;
 
     private Transform playerTransform;
     private bool isFollowing;
+    private Vector2 initialDirection;
 
     private void Start()
     {
         isFollowing = false;
-        coinManager = CoinManager.instance;
+        scoreManager = ScoreManager.instance;
     }
 
-
-    // Update is called once per frame
     void Update()
     {
-        if (!isFollowing && Detect())
+        if (Detect())
         {
-            StartCoroutine(FollowPlayerForDuration(3f)); // Đuổi theo player trong 3 giây
+            StartCoroutine(FollowPlayerForDuration(4f)); // Follow player for 4 seconds
         }
     }
 
     private bool Detect()
     {
-        Collider2D playerCollider = Physics2D.OverlapCircle(gameObject.transform.position, range, LayerMask);
-        // Check if there is a collision => playerCollider != null else null.
-        if (playerCollider != null)
+        if (!isFollowing)
         {
-            playerTransform = playerCollider.transform;
-            return true;
+            Collider2D playerCollider = Physics2D.OverlapCircle(gameObject.transform.position, range, LayerMask);
+            if (playerCollider != null)
+            {
+                playerTransform = playerCollider.transform;
+                initialDirection = (playerTransform.position - transform.position).normalized;
+                return true;
+            }
         }
-        playerTransform = null;
         return false;
     }
 
@@ -55,10 +55,7 @@ public class ChasePlayer : MonoBehaviour
         {
             if (playerTransform != null)
             {
-                // Logic để di chuyển theo player
-                // Ví dụ:
-                Vector2 direction = (playerTransform.position - transform.position).normalized;
-                transform.Translate(direction * Time.deltaTime * speed); // Giả sử tốc độ là 2
+                transform.Translate(initialDirection * Time.deltaTime * speed);
             }
             timer += Time.deltaTime;
             yield return null;
@@ -71,7 +68,7 @@ public class ChasePlayer : MonoBehaviour
     {
         if (collision.gameObject.CompareTag(tagName))
         {
-            coinManager.ChangeCoins(value);
+            scoreManager.ChangeCoins(value);
             GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             Destroy(explosion, 2f);
             Destroy(collision.gameObject);

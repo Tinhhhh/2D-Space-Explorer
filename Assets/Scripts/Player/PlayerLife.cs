@@ -8,7 +8,7 @@ public class PlayerLife : MonoBehaviour
     [SerializeField] private GameObject explosionPrefab;
     [SerializeField] private int value;
     private PlayerManager playerManager;
-    private CoinManager coinManager;
+    private ScoreManager scoreManager;
     private Player player;
 
 
@@ -16,7 +16,7 @@ public class PlayerLife : MonoBehaviour
     private void Start()
     {
         //Lay gia tri hien tai 
-        coinManager = CoinManager.instance;
+        scoreManager = ScoreManager.instance;
         playerManager = PlayerManager.instance;
         player = Player.instance;
     }
@@ -28,7 +28,7 @@ public class PlayerLife : MonoBehaviour
             GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             Destroy(explosion, 2f);
             Destroy(collision.gameObject);
-            coinManager.ChangeCoins(value);
+            scoreManager.ChangeCoins(value);
             gameObject.GetComponent<PlayerAnimations>().ShowDeadAnimation();
             // gameObject.SetActive(false);
             playerManager.MinusExtraLife(1);

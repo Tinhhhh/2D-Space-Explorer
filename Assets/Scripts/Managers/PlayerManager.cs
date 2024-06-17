@@ -28,6 +28,11 @@ public class PlayerManager : MonoBehaviour
         extralifeDisplay.text = extralife.ToString();
     }
 
+    public int GetExtraLife()
+    {
+        return extralife;
+    }
+
     
     public void MinusExtraLife(int amount)
     {

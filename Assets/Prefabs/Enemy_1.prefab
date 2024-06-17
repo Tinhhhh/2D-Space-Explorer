@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6647688648983319631}
   - component: {fileID: 3001919094052722755}
   - component: {fileID: 4705669857869670456}
-  - component: {fileID: 1653445699185620559}
   m_Layer: 7
   m_Name: Enemy_1
   m_TagString: Enemy
@@ -167,23 +166,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1653445699185620559
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9023898104115375970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1d33d45dcf14d341a89e1024693377b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 10
-  speed: 8
-  LayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  explosionPrefab: {fileID: 3675091237904934080, guid: a67011f926b70484393b47727951141b, type: 3}
-  tagName: Asteroid
-  value: 0

@@ -8,7 +8,7 @@ public class ProjectileScript : MonoBehaviour
     [SerializeField] private float bulletExist;
     [SerializeField] private GameObject explosionPrefab;
     [SerializeField] private int value;
-    private CoinManager coinManager;
+    private ScoreManager scoreManager;
 
 
     // Start is called before the first frame update
@@ -20,7 +20,7 @@ public class ProjectileScript : MonoBehaviour
 
     void Start()
     {
-        coinManager = CoinManager.instance;
+        scoreManager = ScoreManager.instance;
     }
 
     // Update is called once per frame
@@ -34,7 +34,7 @@ public class ProjectileScript : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-            coinManager.ChangeCoins(value);
+            scoreManager.ChangeCoins(value);
             Destroy(explosion, 2f);
             Destroy(collision.gameObject);
             Destroy(gameObject);
