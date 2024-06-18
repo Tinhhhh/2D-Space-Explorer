@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
         dirX = Input.GetAxisRaw("Horizontal");
         dirY = Input.GetAxisRaw("Vertical");
 
-        animator.SetFloat(moveX, dirX);
-        animator.SetFloat(moveY, dirY);
+        // animator.SetFloat(moveX, dirX);
+        // animator.SetFloat(moveY, dirY);
     }
 }

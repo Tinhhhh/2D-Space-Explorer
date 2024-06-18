@@ -17,6 +17,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SetActive(bool isActive)
+    {
+        gameObject.SetActive(isActive);
+    }
+
     public void EnablePlayerAfterDelay(GameObject player, float delay)
     {
         StartCoroutine(EnableAfterDelay(player, delay));

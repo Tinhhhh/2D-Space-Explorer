@@ -161,4 +161,4 @@ MonoBehaviour:
     m_Bits: 64
   explosionPrefab: {fileID: 3675091237904934080, guid: a67011f926b70484393b47727951141b, type: 3}
   tagName: Enemy
-  value: 2500
+  value: 1250

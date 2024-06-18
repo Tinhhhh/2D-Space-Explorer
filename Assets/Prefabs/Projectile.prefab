@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff5c8184e4202a446afb1090b2b15250, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entity: Enemy
   moveSpeed: 40
   bulletExist: 5
   explosionPrefab: {fileID: 3675091237904934080, guid: a67011f926b70484393b47727951141b, type: 3}

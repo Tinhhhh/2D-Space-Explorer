@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
 
-public class UFOChase : MonoBehaviour
+public class EnemyChasePlayer : MonoBehaviour
 {
     [Header("Config")]
     [SerializeField] private float range;
@@ -12,22 +13,24 @@ public class UFOChase : MonoBehaviour
     [SerializeField] private string tagName;
     [SerializeField] private int value;
     private ScoreManager scoreManager;
-
+    private PlayerManager playerManager;
     private Transform playerTransform;
     private bool isFollowing;
-    private Vector2 initialDirection;
 
     private void Start()
     {
         isFollowing = false;
         scoreManager = ScoreManager.instance;
+        playerManager = PlayerManager.instance;
     }
 
+
+    // Update is called once per frame
     void Update()
     {
         if (Detect())
         {
-            StartCoroutine(FollowPlayerForDuration(4f)); // Follow player for 4 seconds
+            StartCoroutine(FollowPlayerForDuration(3f)); // Đuổi theo player trong 3 giây
         }
     }
 
@@ -36,10 +39,10 @@ public class UFOChase : MonoBehaviour
         if (!isFollowing)
         {
             Collider2D playerCollider = Physics2D.OverlapCircle(gameObject.transform.position, range, LayerMask);
+            // Check if there is a collision => playerCollider != null else null.
             if (playerCollider != null)
             {
                 playerTransform = playerCollider.transform;
-                initialDirection = (playerTransform.position - transform.position).normalized;
                 return true;
             }
         }
@@ -55,7 +58,10 @@ public class UFOChase : MonoBehaviour
         {
             if (playerTransform != null)
             {
-                transform.Translate(initialDirection * Time.deltaTime * speed);
+                // Logic để di chuyển theo player
+                // Ví dụ:
+                Vector2 direction = (playerTransform.position - transform.position).normalized;
+                transform.Translate(direction * Time.deltaTime * speed); // Giả sử tốc độ là 2
             }
             timer += Time.deltaTime;
             yield return null;
@@ -69,10 +75,23 @@ public class UFOChase : MonoBehaviour
         if (collision.gameObject.CompareTag(tagName))
         {
             scoreManager.ChangeCoins(value);
+            //Tao ra mot vu no
             GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             Destroy(explosion, 2f);
+
+            //Xoa doi tuong bi va cham
             Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            //Tao ra mot vu no
+            GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(explosion, 2f);
+
+            //Tu xoa ban than
             Destroy(gameObject);
+            playerManager.MinusExtraLife();
         }
     }
 

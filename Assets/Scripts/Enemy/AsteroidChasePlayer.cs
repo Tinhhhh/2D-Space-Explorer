@@ -12,7 +12,7 @@ public class AsteroidChasePlayer : MonoBehaviour
     [SerializeField] private string tagName;
     [SerializeField] private int value;
     private ScoreManager scoreManager;
-
+    private PlayerManager playerManager;
     private Transform playerTransform;
     private bool isFollowing;
     private Vector2 initialDirection;
@@ -21,6 +21,7 @@ public class AsteroidChasePlayer : MonoBehaviour
     {
         isFollowing = false;
         scoreManager = ScoreManager.instance;
+        playerManager = PlayerManager.instance;
     }
 
     void Update()
@@ -69,10 +70,23 @@ public class AsteroidChasePlayer : MonoBehaviour
         if (collision.gameObject.CompareTag(tagName))
         {
             scoreManager.ChangeCoins(value);
+            //Tao ra mot vu no
             GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             Destroy(explosion, 2f);
+
+            //Xoa doi tuong bi va cham
             Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+             //Tao ra mot vu no
+            GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(explosion, 2f);
+
+            //Tu xoa ban than
             Destroy(gameObject);
+            playerManager.MinusExtraLife();
         }
     }
 

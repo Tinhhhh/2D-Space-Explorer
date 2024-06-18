@@ -8,7 +8,6 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager instance;
     [SerializeField] private TMP_Text scoreDisplay;
     private PlayerManager playerManager;
-
     private int score;
     private void Awake()
     {
@@ -38,18 +37,21 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    public int GetScore()
+    public int Getscore()
     {
         return score;
     }
 
     private IEnumerator IncreaseCoinsOverTime()
     {
-        while (true && playerManager.extralife <=0)
+        while (true)
         {
-            yield return new WaitForSeconds(2f); // Chờ 2 giây
-            ChangeCoins(50); // Tăng 50 điểm
+            yield return new WaitForSeconds(1f); // Chờ 2 giây
+            if (playerManager.IsAlive())
+            {
+                ChangeCoins(50); // Tăng 50 điểm
+            }
         }
-    }
 
+    }
 }

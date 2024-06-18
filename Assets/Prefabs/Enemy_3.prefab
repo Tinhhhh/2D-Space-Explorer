@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 1641219298507637284}
   - component: {fileID: -2237911452954293}
   - component: {fileID: 6490589013212141805}
-  - component: {fileID: 1087640614462356055}
-  - component: {fileID: 4878731510083807534}
+  - component: {fileID: -3106183700968571695}
+  - component: {fileID: 7136129126953623561}
   m_Layer: 7
   m_Name: Enemy_3
   m_TagString: Enemy
@@ -167,8 +167,8 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 0
   m_CollisionDetection: 1
-  m_Constraints: 0
---- !u!114 &1087640614462356055
+  m_Constraints: 4
+--- !u!114 &-3106183700968571695
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -177,27 +177,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 531650450987968195}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1d33d45dcf14d341a89e1024693377b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5836b5b00d7fc974aa6090c838cb4b0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 30
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  projectilePrefab: {fileID: 4631070083180837441, guid: c11158d0241e6764e9c799b8786240cd, type: 3}
+  shootCooldown: 2
+  projectileLifetime: 2
+--- !u!114 &7136129126953623561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531650450987968195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 260e556382c47a245adc6fa2b88cda02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   range: 20
-  speed: 12
+  speed: 18
   LayerMask:
     serializedVersion: 2
     m_Bits: 64
   explosionPrefab: {fileID: 3675091237904934080, guid: a67011f926b70484393b47727951141b, type: 3}
   tagName: Asteroid
---- !u!114 &4878731510083807534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 531650450987968195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ea46704a79545c419ec64bc132ab292, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveDistance: 15
-  moveSpeed: 10
+  value: 1250

@@ -17,14 +17,31 @@ public class HighestScoreManager : MonoBehaviour
         highestScore = PlayerPrefs.GetInt("HighestScore", 0);
     }
 
-    private void Update()
+    private void Update(){
+        Debug.Log("Highest Score: " + highestScore);
+        
+    }
+
+    public void HighestScoreUpdate(int currentScore)
     {
-        int currentScore = ScoreManager.instance.GetScore();
         if (currentScore > highestScore)
         {
             highestScore = currentScore;
             PlayerPrefs.SetInt("HighestScore", highestScore);
         }
+        OnGUI();
+    }
+
+    public void ResetHighestScore()
+    {
+        PlayerPrefs.SetInt("HighestScore", 0);
+        highestScore = 0;
+        OnGUI();
+    }
+
+    private void OnGUI()
+    {
         highestScoreDisplay.text = highestScore.ToString();
     }
+
 }

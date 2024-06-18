@@ -181,3 +181,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDistance: 20
   moveSpeed: 15
+  explosionPrefab: {fileID: 3675091237904934080, guid: a67011f926b70484393b47727951141b, type: 3}
