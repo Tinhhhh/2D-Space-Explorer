@@ -51,7 +51,7 @@ public class EnemyShooter : MonoBehaviour
             GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
             Vector2 direction = (playerTransform.position - transform.position).normalized;
             projectile.GetComponent<Rigidbody2D>().velocity = direction * 2;
-            Destroy(projectile, 3f); // destroy the projectile after 3 seconds
+            Destroy(projectile, projectileLifetime); // destroy the projectile after 3 seconds
 
             yield return new WaitForSeconds(2f); // wait for 2 seconds before creating the next projectile
         }

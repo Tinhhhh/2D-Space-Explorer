@@ -10,17 +10,12 @@ public class ProjectileScript : MonoBehaviour
     [SerializeField] private GameObject explosionPrefab;
     private PlayerManager playerManager;
     private Vector2 direction;
+    private ScoreManager scoreManager;
 
     // Start is called before the first frame update
-    void Awake()
-    {
-
-        Destroy(gameObject, bulletExist);
-    }
 
     void Start()
     {
-        playerManager = PlayerManager.instance;
         if (entity != "Player")
         {
             direction = Vector2.up;
@@ -29,6 +24,10 @@ public class ProjectileScript : MonoBehaviour
         {
             direction = (GameObject.FindWithTag("Player").transform.position - transform.position).normalized;
         }
+        scoreManager = ScoreManager.instance;
+        playerManager = PlayerManager.instance;
+        Destroy(gameObject, bulletExist);
+
     }
 
     // Update is called once per frame
@@ -51,6 +50,7 @@ public class ProjectileScript : MonoBehaviour
 
             if (collision.gameObject.CompareTag("Enemy"))
             {
+                scoreManager.ChangeCoins(200);
                 //Xoa doi tuong bi va cham
                 Destroy(collision.gameObject);
             }

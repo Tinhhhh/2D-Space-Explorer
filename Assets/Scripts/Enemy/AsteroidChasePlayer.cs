@@ -22,6 +22,7 @@ public class AsteroidChasePlayer : MonoBehaviour
         isFollowing = false;
         scoreManager = ScoreManager.instance;
         playerManager = PlayerManager.instance;
+    
     }
 
     void Update()

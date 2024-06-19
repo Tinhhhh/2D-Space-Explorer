@@ -6,6 +6,9 @@ public class MainMenuFeature : MonoBehaviour
 {
     public void StartNewGame()
     {
+        var highestScore = PlayerPrefs.GetInt("HighestScore"); 
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.SetInt("HighestScore", highestScore);
         SceneManager.LoadScene(1);
     }
 

@@ -5,43 +5,40 @@ public class HighestScoreManager : MonoBehaviour
 {
     public static HighestScoreManager instance;
     [SerializeField] private TMP_Text highestScoreDisplay;
-
     private int highestScore;
+    private int currentScore;
 
-    private void Awake()
+    private void Start()
     {
         if (!instance)
         {
             instance = this;
         }
-        highestScore = PlayerPrefs.GetInt("HighestScore", 0);
+        highestScore = PlayerPrefs.GetInt("HighestScore");
     }
 
-    private void Update(){
-        Debug.Log("Highest Score: " + highestScore);
-        
-    }
-
-    public void HighestScoreUpdate(int currentScore)
+    private void Update()
     {
+        Debug.Log("Current Score: " + ScoreManager.instance.Getscore());
+        Debug.Log("Highest Score: " + highestScore);
+        highestScoreDisplay.text = PlayerPrefs.GetInt("HighestScore", 0).ToString();
+    }
+
+    public void HighestScoreUpdate()
+    {
+        currentScore = ScoreManager.instance.Getscore();
+        // Update highest score if current score is greater
         if (currentScore > highestScore)
         {
-            highestScore = currentScore;
-            PlayerPrefs.SetInt("HighestScore", highestScore);
+            PlayerPrefs.SetInt("HighestScore", currentScore);
         }
-        OnGUI();
     }
 
     public void ResetHighestScore()
     {
         PlayerPrefs.SetInt("HighestScore", 0);
         highestScore = 0;
-        OnGUI();
     }
 
-    private void OnGUI()
-    {
-        highestScoreDisplay.text = highestScore.ToString();
-    }
 
 }

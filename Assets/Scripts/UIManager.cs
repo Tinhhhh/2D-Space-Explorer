@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public GameObject Title;
+    public GameObject WinTitle;
+    public GameObject GameOverTitle;
     public GameObject Exit;
     public GameObject Restart;
     public GameObject MainMenu;
@@ -15,12 +16,14 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         UIManager.Instance = this;
-        this.Title = GameObject.Find("Title");
+        this.WinTitle = GameObject.Find("WinTitle");
+        this.GameOverTitle = GameObject.Find("GameOverTitle");
         this.Exit = GameObject.Find("Exit");
         this.Restart = GameObject.Find("Restart");
         this.MainMenu = GameObject.Find("MainMenu");
         this.Player = GameObject.Find("Player");
-        this.Title.SetActive(false);
+        this.WinTitle.SetActive(false);
+        this.GameOverTitle.SetActive(false);
         this.Exit.SetActive(false);
         this.Restart.SetActive(false);
         this.MainMenu.SetActive(false);

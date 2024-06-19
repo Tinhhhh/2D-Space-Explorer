@@ -153,6 +153,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entity: Enemy
   moveSpeed: 40
-  bulletExist: 5
+  bulletExist: 1.5
   explosionPrefab: {fileID: 3675091237904934080, guid: a67011f926b70484393b47727951141b, type: 3}
-  value: 1000

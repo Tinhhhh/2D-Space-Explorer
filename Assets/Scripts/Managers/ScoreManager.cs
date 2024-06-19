@@ -2,19 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance;
     [SerializeField] private TMP_Text scoreDisplay;
     private PlayerManager playerManager;
-    private int score;
+    public int score;
     private void Awake()
     {
         if (!instance)
         {
             instance = this;
         }
+
+        if (PlayerPrefs.HasKey("Score"))
+        {
+            score = PlayerPrefs.GetInt("Score");
+        }
+        else
+        {
+            score = 0;
+        }
+
+    }
+
+    void Update()
+    {
+        if (playerManager.IsAlive())
+        {
+            scoreDisplay.text = score.ToString();
+        }
+
     }
 
     private void Start()
@@ -23,14 +43,10 @@ public class ScoreManager : MonoBehaviour
         StartCoroutine(IncreaseCoinsOverTime());
         playerManager = PlayerManager.instance;
     }
-    private void OnGUI()
-    {
-        scoreDisplay.text = score.ToString();
-    }
 
     public void ChangeCoins(int amount)
     {
-        score += amount;
+        score = Getscore() + amount;
         if (score <= 0)
         {
             score = 0;

@@ -8,20 +8,37 @@ using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
-    public static PlayerManager instance;
     [SerializeField] private GameObject player;
     [SerializeField] private TMP_Text extralifeDisplay;
     [SerializeField] private GameObject pauseButton;
+    public static PlayerManager instance;
     private ScoreManager scoreManager;
     private HighestScoreManager highestScoreManager;
     private UIManager uiManager;
     public int extralife;
+
     void Awake()
     {
-        if (!instance)
+        // Check if instance already exists
+        if (instance == null)
         {
+            // if not, set instance to this
             instance = this;
+            // Don't destroy this instance when loading a new scene
         }
+        else if (instance != this)
+        {
+            // If instance already exists and it's not this, then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a PlayerManager.
+            Destroy(gameObject);
+        }
+
+        if (PlayerPrefs.HasKey("ExtraLife"))
+        {
+            extralife = PlayerPrefs.GetInt("ExtraLife");
+            CanBeAttacked();
+
+        }
+
         scoreManager = ScoreManager.instance;
         highestScoreManager = HighestScoreManager.instance;
         uiManager = UIManager.Instance;
@@ -32,6 +49,11 @@ public class PlayerManager : MonoBehaviour
     private void OnGUI()
     {
         extralifeDisplay.text = extralife.ToString();
+    }
+
+    public int GetExtraLife()
+    {
+        return extralife;
     }
 
     public bool IsAlive()
@@ -51,35 +73,43 @@ public class PlayerManager : MonoBehaviour
 
     public void MinusExtraLife()
     {
-        scoreManager.ChangeCoins(500);
         extralife = extralife - 1;
-        
 
         if (extralife <= 0)
         {
             extralife = 0;
             uiManager.Player.SetActive(false);
-            uiManager.Title.SetActive(true);
+            uiManager.GameOverTitle.SetActive(true);
             uiManager.Restart.SetActive(true);
             uiManager.Exit.SetActive(true);
             uiManager.MainMenu.SetActive(true);
             pauseButton.SetActive(false);
+            highestScoreManager.HighestScoreUpdate();
+            // highestScoreManager.ResetHighestScore();
+
         }
         else
         {
             //Sau khi chet 1 mang thi chuyen vao trang thai khong the bi tan cong
-            player.GetComponent<PlayerAnimations>().ShowDeadAnimation();
-            player.tag = "Untagged";
-            player.layer = 0;
-            StartCoroutine(ActivatePlayerAfterDelay(3f));
+            CanBeAttacked();
+
         }
-        OnGUI();
-        highestScoreManager.ResetHighestScore();
-        highestScoreManager.HighestScoreUpdate(scoreManager.Getscore());
-
-
-
     }
+
+    private void CanBeAttacked()
+    {
+        StartCoroutine(InactivatePlayerAfterDelay(0));
+        StartCoroutine(ActivatePlayerAfterDelay(3f));
+    }
+
+    private IEnumerator InactivatePlayerAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        player.GetComponent<PlayerAnimations>().ShowDeadAnimation();
+        player.tag = "Untagged";
+        player.layer = 0;
+    }
+
     //tro lai trang thai ban dau sau 3 giay
     private IEnumerator ActivatePlayerAfterDelay(float delay)
     {
