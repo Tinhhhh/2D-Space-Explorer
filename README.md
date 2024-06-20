@@ -1,2 +1,1 @@
-"# Space-Explorer" 
-"# Space-Explorer" 
+AWSD or arrow to move. "K" to fire 
